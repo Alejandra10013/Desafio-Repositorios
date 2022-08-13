@@ -33,17 +33,16 @@ formulario.addEventListener('submit', (event) => {
 
     } else {
         Promise.all([getUser(nombreUsuario), getRepo(nombreUsuario, pagina, repoPagina)])
-            .then(resp => {
+            .then(respuesta => {
 
                 let resultados = document.getElementById("resultados");
 
-                if (resp[0].name == null) {
-                    throw new Error('El usuario no existe');
+                if (respuesta[0].name == null) {
+                    throw new Error('El usuario ingresado no existe.');
                 }
                 else {
                     $("#resultados-section").show();
-                    resultados.innerHTML =
-                        `
+                    resultados.innerHTML = `
                         <table class="container">
                             <tr>
                                 <th class="font-weight-normal h3">Datos de Usuario</th>
@@ -51,20 +50,20 @@ formulario.addEventListener('submit', (event) => {
                             </tr>
                             <tr>
                                 <td>
-                                    <img src=${resp[0].avatar_url} class="avatar py-4" width="30%" height="30%">
-                                    <p>Nombre de Usuario: ${resp[0].name}</p>
-                                    <p>Nombre de login: ${resp[0].login}</p>
-                                    <p>Cantidad de repositorios: ${resp[0].public_repos}</p>
-                                    <p>Localidad: ${resp[0].location}</p>
-                                    <p>Tipo de usuario: ${resp[0].type}</p>
+                                    <img src=${respuesta[0].avatar_url} class="avatar py-4" width="30%" height="30%">
+                                    <p>Nombre de Usuario: ${respuesta[0].name}</p>
+                                    <p>Nombre de login: ${respuesta[0].login}</p>
+                                    <p>Cantidad de repositorios: ${respuesta[0].public_repos}</p>
+                                    <p>Localidad: ${respuesta[0].location}</p>
+                                    <p>Tipo de usuario: ${respuesta[0].type}</p>
                                 </td>
                                 <td id="segundaColumna"></td>
                             </tr>
                         </table>
                     `;
 
-                    for (let i = 0; i < resp[1].length; i++) {
-                        $('#segundaColumna').append(`<a href=${resp[1][i].html_url} target='_blank'>${resp[1][i].name}</a></br>`);
+                    for (let i = 0; i < respuesta[1].length; i++) {
+                        $('#segundaColumna').append(`<a href=${respuesta[1][i].html_url} target='_blank'>${respuesta[1][i].name}</a></br>`);
                     }
                 }
             })
